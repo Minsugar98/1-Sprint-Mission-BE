@@ -44,6 +44,7 @@ app.get("/articles", async (req, res) => {
       select: {
         name: true,
         id: true,
+        like: true,
         title: true,
         content: true,
         createAt: true,
