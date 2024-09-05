@@ -12,11 +12,13 @@ app.use(cors());
 app.use(express.json());
 
 app.get("/articles", async (req, res) => {
-  const page = req.query.page || 1;
-  const pageSize = req.query.pageSize || 10;
-  const keyword = req.query.keyword;
-
   try {
+    const page = parseInt(req.query.page) || 1;
+    const pageSize = parseInt(req.query.pageSize) || 10;
+    const keyword = req.query.keyword;
+    const sortOrder = req.query.orderBy || "createAt"; // 정렬할 필드 (기본값은 createAt)
+    const sortBy = req.query.order === "desc" ? "desc" : "asc"; // 정렬 방향 (기본값은 asc)
+
     const conditions = keyword
       ? {
           title: {
@@ -29,10 +31,10 @@ app.get("/articles", async (req, res) => {
     const articles = await prisma.article.findMany({
       where: conditions,
       orderBy: {
-        createAt: "asc",
+        [sortOrder]: sortBy, // 동적으로 필드와 방향을 설정
       },
       skip: (page - 1) * pageSize,
-      take: parseInt(pageSize),
+      take: pageSize,
       select: {
         name: true,
         id: true,
@@ -48,8 +50,8 @@ app.get("/articles", async (req, res) => {
     res.json({
       data: articles,
       total: totalArticles,
-      page: parseInt(page),
-      pageSize: parseInt(pageSize),
+      page,
+      pageSize,
       totalPages: Math.ceil(totalArticles / pageSize),
     });
   } catch (e) {
@@ -218,6 +220,6 @@ app.get("/articles/:id/comments", async (req, res) => {
   res.status(200).json({ data: comments, nextCursor });
 });
 
-app.listen(3000, () => {
+app.listen(3001, () => {
   console.log("Server started on port 3000");
 });

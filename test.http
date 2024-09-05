@@ -1,6 +1,6 @@
 
 ### 게시글 조회
-GET http://localhost:3000/articles
+GET http://localhost:3001/articles?pageSize=3&orderBy=id&order=desc
 
 
 ### 게시글 등록
