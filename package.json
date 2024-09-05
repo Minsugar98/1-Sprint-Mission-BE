@@ -19,8 +19,8 @@
   },
   "type": "module",
   "scripts": {
-    "dev": "nodemon main.js",
-    "start": "node start.js"
+    "dev": "nodemon start.js",
+    "start": "node articles.js"
   },
   "prisma": {
     "seed": "node prisma/seed.js"

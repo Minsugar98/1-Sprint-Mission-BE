@@ -1,10 +1,10 @@
 
 ### 게시글 조회
-GET https://articles-2bks.onrender.com/article/66b8441c519305ccf5ca1e11
+GET http://localhost:3000/articles
 
 
 ### 게시글 등록
-POST https://articles-2bks.onrender.com/article
+POST http://localhost:3000/articles
 Content-Type: application/json
 
 {

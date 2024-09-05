@@ -9,7 +9,7 @@ const app = express();
 
 app.use(express.json());
 
-app.get("/article", async (req, res) => {
+app.get("/articles", async (req, res) => {
   const { keyword, page = 1, pageSize = 10 } = req.query;
 
   try {
@@ -62,7 +62,7 @@ app.get("/article", async (req, res) => {
   }
 });
 
-app.post("/article", async (req, res) => {
+app.post("/articles", async (req, res) => {
   try {
     const { title, content } = req.body;
     const article = await prisma.article.create({
@@ -78,7 +78,7 @@ app.post("/article", async (req, res) => {
   }
 });
 
-app.patch("/article/:id", async (req, res) => {
+app.patch("/articles/:id", async (req, res) => {
   try {
     const { id } = req.params;
     const { title, content } = req.body;
@@ -98,7 +98,7 @@ app.patch("/article/:id", async (req, res) => {
   }
 });
 
-app.delete("/article/:id", async (req, res) => {
+app.delete("/articles/:id", async (req, res) => {
   try {
     const { id } = req.params;
     const article = await prisma.article.delete({
@@ -113,7 +113,7 @@ app.delete("/article/:id", async (req, res) => {
   }
 });
 
-app.post("/article/:id/comment", async (req, res) => {
+app.post("/articles/:id/comments", async (req, res) => {
   const { id } = req.params;
   const { content } = req.body;
 
@@ -140,7 +140,7 @@ app.post("/article/:id/comment", async (req, res) => {
   }
 });
 
-app.patch("/article/:id/comment/:commentId", async (req, res) => {
+app.patch("/articles/:id/comments/:commentsId", async (req, res) => {
   const { id, commentId } = req.params;
   const { content } = req.body;
   try {
@@ -168,7 +168,7 @@ app.patch("/article/:id/comment/:commentId", async (req, res) => {
   }
 });
 
-app.delete("/article/:id/comment/:commentId", async (req, res) => {
+app.delete("/articles/:id/comments/:commentsId", async (req, res) => {
   const { id, commentId } = req.params;
   try {
     const article = await prisma.article.findUnique({
@@ -192,7 +192,7 @@ app.delete("/article/:id/comment/:commentId", async (req, res) => {
   }
 });
 
-app.get("/article/:id/comment", async (req, res) => {
+app.get("/articles/:id/comments", async (req, res) => {
   const { id } = req.params;
   const { cursor, limit = 10 } = req.query;
   const comments = await prisma.articleComment.findMany({
@@ -218,5 +218,5 @@ app.get("/article/:id/comment", async (req, res) => {
 });
 
 app.listen(3000, () => {
-  console.log("Server is running");
+  console.log("Server started on port 3000");
 });
