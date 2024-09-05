@@ -14,18 +14,21 @@ async function main() {
   // Create articles
   const article1 = await prisma.article.create({
     data: {
+      name: "1번",
       title: "article1",
       content: "content1",
     },
   });
   const article2 = await prisma.article.create({
     data: {
+      name: "2번",
       title: "article2",
       content: "content2",
     },
   });
   const article3 = await prisma.article.create({
     data: {
+      name: "3번",
       title: "article3",
       content: "content3",
     },
@@ -34,6 +37,7 @@ async function main() {
   // Create article comments
   await prisma.articleComment.create({
     data: {
+      name: "1번",
       content: "comment1",
       articleId: article1.id,
     },
@@ -41,18 +45,21 @@ async function main() {
 
   await prisma.articleComment.create({
     data: {
+      name: "1-2번",
       content: "comment2",
       articleId: article1.id,
     },
   });
   await prisma.articleComment.create({
     data: {
+      name: "3번",
       content: "comment3",
       articleId: article2.id,
     },
   });
   await prisma.articleComment.create({
     data: {
+      name: "3번",
       content: "comment4",
       articleId: article3.id,
     },
