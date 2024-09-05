@@ -42,6 +42,7 @@ app.get("/articles", async (req, res) => {
       skip: (page - 1) * pageSize,
       take: parseInt(pageSize),
       select: {
+        name: true,
         id: true,
         title: true,
         content: true,
@@ -66,9 +67,10 @@ app.get("/articles", async (req, res) => {
 
 app.post("/articles", async (req, res) => {
   try {
-    const { title, content } = req.body;
+    const { title, content, name } = req.body;
     const article = await prisma.article.create({
       data: {
+        name,
         title,
         content,
       },
@@ -83,12 +85,13 @@ app.post("/articles", async (req, res) => {
 app.patch("/articles/:id", async (req, res) => {
   try {
     const { id } = req.params;
-    const { title, content } = req.body;
+    const { title, content, name } = req.body;
     const article = await prisma.article.update({
       where: {
         id,
       },
       data: {
+        name,
         title,
         content,
       },
@@ -117,7 +120,7 @@ app.delete("/articles/:id", async (req, res) => {
 
 app.post("/articles/:id/comments", async (req, res) => {
   const { id } = req.params;
-  const { content } = req.body;
+  const { content, name } = req.body;
 
   try {
     const article = await prisma.article.findUnique({
@@ -131,6 +134,7 @@ app.post("/articles/:id/comments", async (req, res) => {
 
     const comment = await prisma.articleComment.create({
       data: {
+        name,
         content,
         articleId: id,
       },
@@ -144,7 +148,7 @@ app.post("/articles/:id/comments", async (req, res) => {
 
 app.patch("/articles/:id/comments/:commentsId", async (req, res) => {
   const { id, commentId } = req.params;
-  const { content } = req.body;
+  const { content, name } = req.body;
   try {
     const article = await prisma.article.findUnique({
       where: {
@@ -161,6 +165,7 @@ app.patch("/articles/:id/comments/:commentsId", async (req, res) => {
       },
       data: {
         content,
+        name,
       },
     });
     res.status(200).json(comment);
@@ -209,6 +214,7 @@ app.get("/articles/:id/comments", async (req, res) => {
     },
     select: {
       id: true,
+      name: true,
       content: true,
       createAt: true,
     },
