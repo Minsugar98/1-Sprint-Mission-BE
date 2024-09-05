@@ -12,25 +12,17 @@ app.use(cors());
 app.use(express.json());
 
 app.get("/articles", async (req, res) => {
-  const { keyword, page = 1, pageSize = 10 } = req.query;
+  const page = req.query.page || 1;
+  const pageSize = req.query.pageSize || 10;
+  const keyword = req.query.keyword;
 
   try {
     const conditions = keyword
       ? {
-          OR: [
-            {
-              title: {
-                contains: keyword,
-                mode: "insensitive",
-              },
-            },
-            {
-              content: {
-                contains: keyword,
-                mode: "insensitive",
-              },
-            },
-          ],
+          title: {
+            contains: keyword,
+            mode: "insensitive", // 대소문자 구분 없이 검색
+          },
         }
       : {};
 
