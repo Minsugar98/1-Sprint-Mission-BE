@@ -60,6 +60,21 @@ app.get("/articles", async (req, res) => {
   }
 });
 
+app.get("/articles/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const article = await prisma.article.findUnique({
+      where: {
+        id,
+      },
+    });
+    res.json(article);
+  } catch (e) {
+    console.error(e);
+    res.status(500).json({ error: "internal server error" });
+  }
+});
+
 app.post("/articles", async (req, res) => {
   try {
     const { title, content, name } = req.body;

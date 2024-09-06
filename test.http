@@ -3,6 +3,8 @@
 GET http://localhost:3001/articles?pageSize=3&orderBy=id&order=desc
 
 
+### 상세 조회
+GET http://localhost:3001/articles/7173d824-333a-4c10-8d98-9e6c34c7327d
 ### 게시글 등록
 POST http://localhost:3001/articles
 Content-Type: application/json
