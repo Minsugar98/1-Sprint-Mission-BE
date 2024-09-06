@@ -9,7 +9,7 @@ datasource db {
 
 model Article {
   id        String           @id @default(uuid())
-  name      String           @default("총명한판다씨")
+  name      String?           @default("총명한판다씨")
   title     String
   like      Int              @default(0)
   content   String  
@@ -20,7 +20,7 @@ model Article {
 
 model ArticleComment {
   id        String   @id @default(uuid())
-  name      String   @default("총명한판다씨")
+  name      String?   @default("총명한판다씨")
   content   String
   like      Int      @default(0)
   createAt  DateTime @default(now())

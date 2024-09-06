@@ -4,7 +4,7 @@ GET http://localhost:3001/articles?pageSize=3&orderBy=id&order=desc
 
 
 ### 게시글 등록
-POST http://localhost:3000/articles
+POST http://localhost:3001/articles
 Content-Type: application/json
 
 {
