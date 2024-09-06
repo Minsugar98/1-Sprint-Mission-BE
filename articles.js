@@ -68,6 +68,9 @@ app.get("/articles/:id", async (req, res) => {
       where: {
         id,
       },
+      include: {
+        comments: true,
+      },
     });
     res.json(article);
   } catch (e) {
