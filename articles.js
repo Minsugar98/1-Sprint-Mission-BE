@@ -64,12 +64,18 @@ app.get("/articles", async (req, res) => {
 app.get("/articles/:id", async (req, res) => {
   try {
     const { id } = req.params;
+    const page = req.query.page || 1;
+    const pageSize = req.query.pageSize || 3;
+
     const article = await prisma.article.findUnique({
       where: {
         id,
       },
       include: {
-        comments: true,
+        comments: {
+          skip: (page - 1) * pageSize,
+          take: parseInt(pageSize),
+        },
       },
     });
     res.json(article);
