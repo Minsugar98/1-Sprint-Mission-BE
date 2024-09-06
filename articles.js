@@ -42,6 +42,7 @@ app.get("/articles", async (req, res) => {
         title: true,
         content: true,
         createAt: true,
+        comments: true,
       },
     });
 
