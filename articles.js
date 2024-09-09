@@ -111,7 +111,7 @@ app.patch("/articles/:id", async (req, res) => {
         id,
       },
       data: {
-        name,
+        name: name || undefined,
         title,
         content,
       },

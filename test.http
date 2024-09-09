@@ -16,7 +16,7 @@ Content-Type: application/json
 
 ### 게시글 수정
 
-PATCH https://articles-2bks.onrender.com/article/8824bdb0-e612-495c-ae01-a78b2a217113
+PATCH http://localhost:3001/articles/cacd2412-616e-46dd-bae9-d9ee0fc20385
 Content-Type: application/json
 
 {
