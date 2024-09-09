@@ -167,7 +167,7 @@ app.post("/articles/:id/comments", async (req, res) => {
 });
 
 app.patch("/articles/:id/comments/:commentsId", async (req, res) => {
-  const { id, commentId } = req.params;
+  const { id, commentsId } = req.params;
   const { content, name } = req.body;
   try {
     const article = await prisma.article.findUnique({
@@ -181,7 +181,7 @@ app.patch("/articles/:id/comments/:commentsId", async (req, res) => {
 
     const comment = await prisma.articleComment.update({
       where: {
-        id: commentId,
+        id: commentsId,
       },
       data: {
         content,
@@ -196,7 +196,7 @@ app.patch("/articles/:id/comments/:commentsId", async (req, res) => {
 });
 
 app.delete("/articles/:id/comments/:commentsId", async (req, res) => {
-  const { id, commentId } = req.params;
+  const { id, commentsId } = req.params;
   try {
     const article = await prisma.article.findUnique({
       where: {
@@ -209,7 +209,7 @@ app.delete("/articles/:id/comments/:commentsId", async (req, res) => {
 
     const comment = await prisma.articleComment.delete({
       where: {
-        id: commentId,
+        id: commentsId,
       },
     });
     res.status(200).json(comment);

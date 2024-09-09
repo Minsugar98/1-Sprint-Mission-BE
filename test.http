@@ -25,7 +25,7 @@ Content-Type: application/json
 }
 ### 게시글 삭제
 
-DELETE https://articles-2bks.onrender.com/article/b7df0d49-8bb3-43fc-af27-5fe98cb8edc1
+DELETE http://localhost:3001/articles/7173d824-333a-4c10-8d98-9e6c34c7327d
 
 
 ### 댓글 추가
@@ -54,7 +54,7 @@ Content-Type: application/json
 GET https://articles-2bks.onrender.com/article/6f664bcf-4573-4e25-8167-60773dcaff3e/comment
 
 ### 댓글 삭제
-DELETE https://articles-2bks.onrender.com/article/6f664bcf-4573-4e25-8167-60773dcaff3e/comment/94b10748-3cb3-4181-9780-04de0f7a7bd0
+DELETE http://localhost:3001/articles/12731250-33c1-4939-b068-66937a775d67/comments/bcf2f4d9-f5ba-4b37-b3de-9d459b567fcd
 
 
 ####################################################
