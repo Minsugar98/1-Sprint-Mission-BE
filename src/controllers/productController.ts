@@ -45,12 +45,27 @@ export async function postProduct(
     const { name, description, price, tags, images } = req.body;
     const { userId } = req.user;
 
-    const tagText: string[] = tags.map((tag: { text: string }) => tag.text);
-    const parsedPrice = parseInt(price, 10);
-    const imagesUrls: string[] = images.map(
-      (image: { url: string }) => image.url
-    );
+    // `tags` 배열에서 `undefined`, `null`, 빈 문자열을 필터링
+    const tagText: string[] = Array.isArray(tags)
+      ? tags.filter((tag) => typeof tag === 'string' && tag.trim() !== '')
+      : [];
 
+    // 가격 파싱 및 검증
+    const parsedPrice = parseInt(price, 10);
+    if (isNaN(parsedPrice)) {
+      return res
+        .status(400)
+        .json({ message: '가격은 유효한 숫자여야 합니다.' });
+    }
+
+    // `images` 배열에서 `undefined`, `null`, 빈 문자열을 필터링
+    const imagesUrls: string[] = Array.isArray(images)
+      ? images.filter(
+          (image) => typeof image === 'string' && image.trim() !== ''
+        )
+      : [];
+
+    // Prisma로 데이터베이스에 제품 정보 추가
     const product = await prisma.product.create({
       data: {
         name,
@@ -61,9 +76,14 @@ export async function postProduct(
         userId,
       },
     });
-    return res.status(201).json({ message: '상품 정보 추가', product });
-  } catch (error) {
+
+    return res.status(201).json({ message: '상품 정보 추가 성공', product });
+  } catch (error: any) {
     console.error('상품 정보 추가 중 오류 발생:', error);
+    if (error.code === 'P2002') {
+      // 중복 오류 처리 (예: 중복된 유저 또는 기타 고유 필드의 중복)
+      return res.status(409).json({ message: '중복된 데이터가 있습니다.' });
+    }
     return res.status(500).json({ message: '상품 정보를 추가할 수 없습니다.' });
   }
 }
