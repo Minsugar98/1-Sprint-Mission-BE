@@ -22,7 +22,7 @@ POST http://localhost:3001/auth/login
 Content-Type: application/json
 
 {
-  "email" : "baba@test.com",
+  "email" : "test@test.com",
   "password" : "12341234"
 }
 ### 접속중인 사용자 조회
@@ -46,7 +46,14 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImVtY
   "description": "666666",
   "name": "6666666"
 }
+### 상품 수정
+PATCH http://localhost:3001/products/13
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIsImVtYWlsIjoidGVzdEB0ZXN0LmNvbSIsImlhdCI6MTczMDk3MjI0NSwiZXhwIjoxNzMwOTczMTQ1fQ.hqyV6vTN7asBjVnMgYd1pVsdrnq_j2hu2VrvAbdKpQw
 
+{
+  "price":3
+}
 
 ### 토큰 재발급
 POST http://localhost:3001/auth/refreshToken
@@ -111,7 +118,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIsImVtY
 
 ### 자유게시판
 
-GET http://localhost:3001/articles/5
+GET http://localhost:3001/articles
 
 ### 게시판 수정
 PATCH http://localhost:3001/article/2
@@ -129,7 +136,7 @@ Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImVtYWlsIjoidGVzdEB0ZXN0LmMiLCJpYXQiOjE3MjgyODMxMjEsImV4cCI6MTcyODI4NDAyMX0.ZKA5Yzxet8lKhC61oIyZ5JLdWRu9EtL9Jc4EiFiabNk
 
 ### 댓글 조회
-GET http://localhost:3001/articles
+GET http://localhost:3001/products/product/11/comments
 Content-Type: application/json
 
 ### 댓글 삭제

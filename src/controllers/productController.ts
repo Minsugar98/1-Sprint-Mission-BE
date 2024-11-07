@@ -165,6 +165,7 @@ export async function patchProduct(
         userId: true,
       },
     });
+
     if (!product) {
       return res
         .status(404)
@@ -177,23 +178,41 @@ export async function patchProduct(
         .json({ message: '해당 상품을 수정할 권한이 없습니다.' });
     }
 
+    // 태그 및 이미지 필터링
     const tagText: string[] = tags
-      ? tags.map((tag: { text: string }) => tag.text)
+      ? tags
+          .filter((tag: { text: string }) => tag && tag.text !== undefined)
+          .map((tag: { text: string }) => tag.text)
       : [];
-    const parsedPrice = price ? parseInt(price, 10) : undefined;
+
     const imagesUrls: string[] = images
-      ? images.map((image: { url: string }) => image.url)
+      ? images
+          .filter((image: { url: string }) => image && image.url !== undefined)
+          .map((image: { url: string }) => image.url)
       : [];
+
+    // 가격 필터링: undefined 값을 허용하지 않도록 필터링
+    const parsedPrice =
+      price !== undefined && price !== null ? parseInt(price, 10) : undefined;
+
+    // 업데이트할 데이터 필터링하여 Prisma가 허용하지 않는 undefined 값이 없도록 처리
+    const updateData: {
+      name?: string;
+      description?: string;
+      price?: number;
+      tags?: string[];
+      images?: string[];
+    } = {};
+
+    if (name) updateData.name = name;
+    if (description) updateData.description = description;
+    if (parsedPrice !== undefined) updateData.price = parsedPrice;
+    if (tagText.length > 0) updateData.tags = tagText;
+    if (imagesUrls.length > 0) updateData.images = imagesUrls;
 
     const updatedProduct = await prisma.product.update({
       where: { id: parseInt(productId, 10) },
-      data: {
-        name: name || undefined,
-        description: description || undefined,
-        price: parsedPrice || undefined,
-        tags: tagText.length ? tagText : undefined,
-        images: imagesUrls.length ? imagesUrls : undefined,
-      },
+      data: updateData,
     });
 
     return res
