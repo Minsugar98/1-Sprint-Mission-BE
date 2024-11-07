@@ -187,18 +187,30 @@ function patchProduct(req, res, next) {
           .status(403)
           .json({ message: '해당 상품을 수정할 권한이 없습니다.' });
       }
-      const tagText = tags ? tags.map((tag) => tag.text) : [];
-      const parsedPrice = price ? parseInt(price, 10) : undefined;
-      const imagesUrls = images ? images.map((image) => image.url) : [];
+      // 태그 및 이미지 필터링
+      const tagText = tags
+        ? tags
+            .filter((tag) => tag && tag.text !== undefined)
+            .map((tag) => tag.text)
+        : [];
+      const imagesUrls = images
+        ? images
+            .filter((image) => image && image.url !== undefined)
+            .map((image) => image.url)
+        : [];
+      // 가격 필터링: undefined 값을 허용하지 않도록 필터링
+      const parsedPrice =
+        price !== undefined && price !== null ? parseInt(price, 10) : undefined;
+      // 업데이트할 데이터 필터링하여 Prisma가 허용하지 않는 undefined 값이 없도록 처리
+      const updateData = {};
+      if (name) updateData.name = name;
+      if (description) updateData.description = description;
+      if (parsedPrice !== undefined) updateData.price = parsedPrice;
+      if (tagText.length > 0) updateData.tags = tagText;
+      if (imagesUrls.length > 0) updateData.images = imagesUrls;
       const updatedProduct = yield prisma.product.update({
         where: { id: parseInt(productId, 10) },
-        data: {
-          name: name || undefined,
-          description: description || undefined,
-          price: parsedPrice || undefined,
-          tags: tagText.length ? tagText : undefined,
-          images: imagesUrls.length ? imagesUrls : undefined,
-        },
+        data: updateData,
       });
       return res
         .status(200)
