@@ -14,7 +14,7 @@ POST http://localhost:3001/auth/login
 Content-Type: application/json
 
 {
-  "email" : "test@test.c",
+  "email" : "1111@1111.c",
   "password" : "12341234"
 }
 ### 로컬 로그인
@@ -26,9 +26,9 @@ Content-Type: application/json
   "password" : "12341234"
 }
 ### 접속중인 사용자 조회
-GET https://ms10-5yps.onrender.com/auth/me
+GET http://localhost:3001/auth/me
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjExLCJlbWFpbCI6ImF2dnZ2dkB0ZXN0LmNvbSIsImlhdCI6MTcyNzg1NTUyMiwiZXhwIjoxNzI3ODU2NDIyfQ.qZpclpcaEShOve-kVTakumUOrdJhpcJWX4WHWAz2qv4
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImVtYWlsIjoiMTExMUAxMTExLmMiLCJpYXQiOjE3MzA5NDc0MjUsImV4cCI6MTczMDk0ODMyNX0.ntVX4lNpkGZKl2sPdJ6wEbFk3eg7zz3d9yO33znx5jY
 
 
 ### 상품 조회
@@ -37,7 +37,7 @@ GET http://localhost:3001/products
 ### 상품 등록
 POST http://localhost:3001/products
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImVtYWlsIjoidGVzdEB0ZXN0LmMiLCJpYXQiOjE3MjgyODQ3NDIsImV4cCI6MTcyODI4NTY0Mn0.8V9oLLfnPKRVL9bjTvpvQD5P9Zz9tOyOydISJtLJgbo
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImVtYWlsIjoiMTExMUAxMTExLmMiLCJpYXQiOjE3MzA5NDc0MjUsImV4cCI6MTczMDk0ODMyNX0.ntVX4lNpkGZKl2sPdJ6wEbFk3eg7zz3d9yO33znx5jY
 
 {
   "images": [],
@@ -58,19 +58,19 @@ Content-Type: application/json
 
 
 ### 게시글 조회
-GET http://localhost:3001/products/4
+GET http://localhost:3001/products/2
 
 ### 게시글 삭제
 
-DELETE http://localhost:3001/products/6
+DELETE http://localhost:3001/products/2
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEyLCJlbWFpbCI6ImJhYmFAdGVzdC5jb20iLCJpYXQiOjE3MjgwMjkyMDUsImV4cCI6MTcyODAzMDEwNX0.lCsAxnjOAxZNf115x3MyDjpMfmvNrXE9dpUFltoJSDg
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImVtYWlsIjoiMTExMUAxMTExLmMiLCJpYXQiOjE3MzA5NDc0MjUsImV4cCI6MTczMDk0ODMyNX0.ntVX4lNpkGZKl2sPdJ6wEbFk3eg7zz3d9yO33znx5jY
 
 
 ### 게시글 수정
-PATCH http://localhost:3001/products/7
+PATCH http://localhost:3001/products/1
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEyLCJlbWFpbCI6ImJhYmFAdGVzdC5jb20iLCJpYXQiOjE3MjgwMjk1NjAsImV4cCI6MTcyODAzMDQ2MH0.4uAlKrvfx3D0bitPYNWbqbgOgFMjIoZoUALJmfY0poQ
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImVtYWlsIjoiMTExMUAxMTExLmMiLCJpYXQiOjE3MzA5NDc0MjUsImV4cCI6MTczMDk0ODMyNX0.ntVX4lNpkGZKl2sPdJ6wEbFk3eg7zz3d9yO33znx5jY
 
 {
   "name" : "수정후",
