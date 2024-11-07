@@ -29,7 +29,7 @@
   },
   "scripts": {
     "dev": "ts-node src/server.ts",
-    "start": "node dist/server.js",
+    "start": "node src/server.js",
     "build": "tsc"
   }
 }
