@@ -6,6 +6,12 @@ import { Request, Response, NextFunction } from 'express';
 
 dotenv.config();
 
+if (!process.env.ACCESS_TOKEN_SECRET) {
+  throw new Error('ACCESS_TOKEN_SECRET is not defined');
+} else if (!process.env.REFRESH_TOKEN_SECRET) {
+  throw new Error('REFRESH_TOKEN_SECRET is not defined');
+}
+
 const prisma = new PrismaClient();
 
 export interface CustomRequest extends Request {
@@ -47,14 +53,14 @@ export async function signup(
     const accessToken = jwt.sign(
       { userId: user.id, email: user.email },
       process.env.ACCESS_TOKEN_SECRET as string,
-      { expiresIn: '15m' }
+      { expiresIn: process.env.ACCESS_TOKEN_EXPIRES_IN }
     );
 
     // 리프레시 토큰 생성
     const refreshToken = jwt.sign(
       { userId: user.id, email: user.email },
       process.env.REFRESH_TOKEN_SECRET as string,
-      { expiresIn: '7d' }
+      { expiresIn: process.env.REFRESH_TOKEN_EXPIRES_IN }
     );
 
     // DB에 리프레시 토큰 저장
@@ -111,7 +117,7 @@ export async function login(
         refreshToken = jwt.sign(
           { userId: user.id, email: user.email },
           process.env.REFRESH_TOKEN_SECRET as string,
-          { expiresIn: '7d' }
+          { expiresIn: process.env.REFRESH_TOKEN_EXPIRES_IN }
         );
 
         await prisma.user.update({
@@ -123,7 +129,7 @@ export async function login(
       refreshToken = jwt.sign(
         { userId: user.id, email: user.email },
         process.env.REFRESH_TOKEN_SECRET as string,
-        { expiresIn: '7d' }
+        { expiresIn: process.env.REFRESH_TOKEN_EXPIRES_IN }
       );
 
       await prisma.user.update({
@@ -136,7 +142,7 @@ export async function login(
     const accessToken = jwt.sign(
       { userId: user.id, email: user.email },
       process.env.ACCESS_TOKEN_SECRET as string,
-      { expiresIn: '15m' }
+      { expiresIn: process.env.ACCESS_TOKEN_EXPIRES_IN }
     );
 
     return res.status(200).json({
@@ -193,13 +199,13 @@ export async function refreshToken(
       const newAccessToken = jwt.sign(
         { userId: user.id, email: user.email },
         process.env.ACCESS_TOKEN_SECRET as string,
-        { expiresIn: '15m' }
+        { expiresIn: process.env.ACCESS_TOKEN_EXPIRES_IN }
       );
 
       const newRefreshToken = jwt.sign(
         { userId: user.id, email: user.email },
         process.env.REFRESH_TOKEN_SECRET as string,
-        { expiresIn: '7d' }
+        { expiresIn: process.env.REFRESH_TOKEN_EXPIRES_IN }
       );
 
       await prisma.user.update({

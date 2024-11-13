@@ -20,6 +20,12 @@ const bcryptjs_1 = __importDefault(require("bcryptjs"));
 const client_1 = require("@prisma/client");
 const dotenv_1 = __importDefault(require("dotenv"));
 dotenv_1.default.config();
+if (!process.env.ACCESS_TOKEN_SECRET) {
+    throw new Error('ACCESS_TOKEN_SECRET is not defined');
+}
+else if (!process.env.REFRESH_TOKEN_SECRET) {
+    throw new Error('REFRESH_TOKEN_SECRET is not defined');
+}
 const prisma = new client_1.PrismaClient();
 function signup(req, res, next) {
     return __awaiter(this, void 0, void 0, function* () {
@@ -43,9 +49,9 @@ function signup(req, res, next) {
                 },
             });
             // 액세스 토큰 생성
-            const accessToken = jsonwebtoken_1.default.sign({ userId: user.id, email: user.email }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '15m' });
+            const accessToken = jsonwebtoken_1.default.sign({ userId: user.id, email: user.email }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: process.env.ACCESS_TOKEN_EXPIRES_IN });
             // 리프레시 토큰 생성
-            const refreshToken = jsonwebtoken_1.default.sign({ userId: user.id, email: user.email }, process.env.REFRESH_TOKEN_SECRET, { expiresIn: '7d' });
+            const refreshToken = jsonwebtoken_1.default.sign({ userId: user.id, email: user.email }, process.env.REFRESH_TOKEN_SECRET, { expiresIn: process.env.REFRESH_TOKEN_EXPIRES_IN });
             // DB에 리프레시 토큰 저장
             yield prisma.user.update({
                 where: { id: user.id },
@@ -87,7 +93,7 @@ function login(req, res, next) {
                 }
                 catch (err) {
                     console.log('Refresh token is invalid or expired. Creating a new one.');
-                    refreshToken = jsonwebtoken_1.default.sign({ userId: user.id, email: user.email }, process.env.REFRESH_TOKEN_SECRET, { expiresIn: '7d' });
+                    refreshToken = jsonwebtoken_1.default.sign({ userId: user.id, email: user.email }, process.env.REFRESH_TOKEN_SECRET, { expiresIn: process.env.REFRESH_TOKEN_EXPIRES_IN });
                     yield prisma.user.update({
                         where: { id: user.id },
                         data: { refreshToken },
@@ -95,14 +101,14 @@ function login(req, res, next) {
                 }
             }
             else {
-                refreshToken = jsonwebtoken_1.default.sign({ userId: user.id, email: user.email }, process.env.REFRESH_TOKEN_SECRET, { expiresIn: '7d' });
+                refreshToken = jsonwebtoken_1.default.sign({ userId: user.id, email: user.email }, process.env.REFRESH_TOKEN_SECRET, { expiresIn: process.env.REFRESH_TOKEN_EXPIRES_IN });
                 yield prisma.user.update({
                     where: { id: user.id },
                     data: { refreshToken },
                 });
             }
             // 액세스 토큰 생성
-            const accessToken = jsonwebtoken_1.default.sign({ userId: user.id, email: user.email }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '15m' });
+            const accessToken = jsonwebtoken_1.default.sign({ userId: user.id, email: user.email }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: process.env.ACCESS_TOKEN_EXPIRES_IN });
             return res.status(200).json({
                 message: '로그인 성공',
                 user: { id: user.id, email: user.email, nickName: user.nickName },
@@ -144,8 +150,8 @@ function refreshToken(req, res, next) {
                 if (user.refreshToken !== refreshToken) {
                     return res.status(403).json({ message: '유효하지 않은 토큰입니다.' });
                 }
-                const newAccessToken = jsonwebtoken_1.default.sign({ userId: user.id, email: user.email }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '15m' });
-                const newRefreshToken = jsonwebtoken_1.default.sign({ userId: user.id, email: user.email }, process.env.REFRESH_TOKEN_SECRET, { expiresIn: '7d' });
+                const newAccessToken = jsonwebtoken_1.default.sign({ userId: user.id, email: user.email }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: process.env.ACCESS_TOKEN_EXPIRES_IN });
+                const newRefreshToken = jsonwebtoken_1.default.sign({ userId: user.id, email: user.email }, process.env.REFRESH_TOKEN_SECRET, { expiresIn: process.env.REFRESH_TOKEN_EXPIRES_IN });
                 yield prisma.user.update({
                     where: { id: user.id },
                     data: { refreshToken: newRefreshToken },
