@@ -6,6 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const authenticateToken_1 = require("../middleware/authenticateToken");
 const productController_1 = require("../controllers/productController");
+const uploadController_1 = require("../controllers/uploadController");
 const router = express_1.default.Router();
 // 상품 목록 가져오기
 router.get('/', (req, res, next) => {
@@ -15,6 +16,7 @@ router.get('/', (req, res, next) => {
 router.post('/', authenticateToken_1.authenticateToken, (req, res, next) => {
     (0, productController_1.postProduct)(req, res, next);
 });
+router.post('/upload', uploadController_1.uploadImage);
 // 특정 상품 정보 조회
 router.get('/:productId', (req, res, next) => {
     (0, productController_1.getProductId)(req, res, next);

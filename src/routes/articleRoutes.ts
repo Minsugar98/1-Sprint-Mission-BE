@@ -8,6 +8,7 @@ import {
   postArticle,
   postArticleFavorite,
 } from '../controllers/articleController';
+import { uploadImage } from '../controllers/uploadController';
 
 // Express 라우터 초기화
 const router = express.Router();
@@ -20,6 +21,8 @@ router.get('/', (req: Request, res: Response, next: NextFunction) => {
 router.get('/:articleId', (req: Request, res: Response, next: NextFunction) => {
   getArticleId(req, res, next);
 });
+
+router.post('/upload', uploadImage);
 
 router.patch(
   '/:articleId',

@@ -6,6 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const authenticateToken_1 = require("../middleware/authenticateToken");
 const articleController_1 = require("../controllers/articleController");
+const uploadController_1 = require("../controllers/uploadController");
 // Express 라우터 초기화
 const router = express_1.default.Router();
 // 각 경로에 적절한 HTTP 메서드와 핸들러 함수 연결
@@ -15,6 +16,7 @@ router.get('/', (req, res, next) => {
 router.get('/:articleId', (req, res, next) => {
     (0, articleController_1.getArticleId)(req, res, next);
 });
+router.post('/upload', uploadController_1.uploadImage);
 router.patch('/:articleId', authenticateToken_1.authenticateToken, (req, res, next) => {
     (0, articleController_1.patchArticle)(req, res, next);
 });

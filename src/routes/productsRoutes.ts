@@ -9,6 +9,7 @@ import {
   postFavorites,
   CustomRequest,
 } from '../controllers/productController';
+import { uploadImage } from '../controllers/uploadController';
 
 const router = express.Router();
 
@@ -25,6 +26,8 @@ router.post(
     postProduct(req as CustomRequest, res, next);
   }
 );
+
+router.post('/upload', uploadImage);
 
 // 특정 상품 정보 조회
 router.get('/:productId', (req: Request, res: Response, next: NextFunction) => {
