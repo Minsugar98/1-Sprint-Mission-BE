@@ -6,7 +6,6 @@ import errorHandler from './middleware/errorHandler';
 import productsRoutes from './routes/productsRoutes';
 import commentsRoutes from './routes/commentsRoutes';
 import articleRoutes from './routes/articleRoutes';
-import envFiles from './env';
 
 dotenv.config();
 

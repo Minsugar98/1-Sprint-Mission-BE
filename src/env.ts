@@ -4,7 +4,7 @@ dotenv.config();
 
 export const databaseUrl = process.env.DATABASE_URL;
 export const awsUrl = process.env.AWS_S3_URL;
-export const productCondition = process.env.PRODUCTCONDITION;
+export const productCondition = process.env.PRODUCT_PRODUCTCONDITION;
 
 let baseUrl = '';
 if (productCondition === 'Product') {

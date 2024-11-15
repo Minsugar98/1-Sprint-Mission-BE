@@ -1,14 +1,7 @@
 import { PrismaClient, Article, Favorite } from '@prisma/client';
 import { Request, Response, NextFunction } from 'express';
 import { CustomRequest } from '../types/customReq';
-import env from '../env';
-const prisma = new PrismaClient({
-  datasources: {
-    db: {
-      url: env.baseUrl,
-    },
-  },
-});
+const prisma = new PrismaClient();
 
 export async function postArticle(
   req: CustomRequest,
