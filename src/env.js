@@ -8,7 +8,7 @@ const dotenv_1 = __importDefault(require("dotenv"));
 dotenv_1.default.config();
 exports.databaseUrl = process.env.DATABASE_URL;
 exports.awsUrl = process.env.AWS_S3_URL;
-exports.productCondition = process.env.PRODUCTCONDITION;
+exports.productCondition = process.env.PRODUCT_PRODUCTCONDITION;
 let baseUrl = '';
 if (exports.productCondition === 'Product') {
     baseUrl = exports.awsUrl;
