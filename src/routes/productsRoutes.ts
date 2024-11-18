@@ -9,7 +9,7 @@ import {
   postFavorites,
   CustomRequest,
 } from '../controllers/productController';
-import { uploadImage } from '../controllers/uploadController';
+import uploadImage from '../controllers/uploadController';
 import multer from 'multer';
 const upload = multer();
 

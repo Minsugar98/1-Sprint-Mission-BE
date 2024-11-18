@@ -7,8 +7,8 @@ import {
   deleteArticle,
   postArticle,
   postArticleFavorite,
-} from '../controllers/articleController';
-import { uploadImage } from '../controllers/uploadController';
+} from '../controllers/articleController.js';
+import uploadImage from '../controllers/uploadController';
 
 // Express 라우터 초기화
 const router = express.Router();
