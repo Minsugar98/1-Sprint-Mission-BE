@@ -1,6 +1,3 @@
-import dotenv from 'dotenv';
-dotenv.config();
-
 import { PrismaClient } from '@prisma/client';
 import { Request, Response, NextFunction } from 'express';
 import env from '../env';
